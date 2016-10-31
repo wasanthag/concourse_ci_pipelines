@@ -27,7 +27,7 @@ resources:
   source:
     cluster_url: http://10.203.188.248:8080
     namespace: default
-    resource_type: job
+    resource_type: deployment
     resource_name: cci-app
     container_name: cci
 
