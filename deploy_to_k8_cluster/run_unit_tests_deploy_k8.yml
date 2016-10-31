@@ -3,14 +3,14 @@ resource_types:
 - name: kubernetes
   type: docker-image
   source:
-    repository: wasanthag/concourse-kubernetes-resource
+    repository: {{docker-hub-k8-resource-image}}
 
 resources:
 - name: github-code
   type: git
   source:
     uri: https://github.com/wasanthag/concourse_ci_pipelines.git
-    branch: develop
+    branch: master
     #paths: [Dockerfile] 
     username: {{git_http_user}}
     password: {{git_http_token}}
