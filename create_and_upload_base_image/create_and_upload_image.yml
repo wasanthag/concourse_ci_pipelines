@@ -1,0 +1,30 @@
+---
+resources:
+- name: github-code
+  type: git
+  source:
+    uri: https://github.com/cisco-cis/nwss-cicd.git
+    #uri: git@github.com:cisco-cis/nwss-cicd.git
+    branch: develop
+    paths: [create_and_upload_base_image/Dockerfile] 
+    username: {{git_http_user}}
+    password: {{git_http_token}}
+    private_key: {{private_key}}
+- name: docker-registry
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: {{docker-hub-base-image}}
+
+jobs:
+- name: build-tools-image
+  public: true
+  plan:
+  - get: github-code
+    trigger: true
+  - put: docker-registry
+    params:
+      build: github-code/create_and_upload_base_image/
+

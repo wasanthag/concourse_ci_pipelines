@@ -1,0 +1,5 @@
+pyaml
+flask
+flask-restful
+bs4
+lxml

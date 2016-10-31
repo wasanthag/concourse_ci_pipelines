@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+#kind: ReplicationController
+kind: Deployment
+metadata:
+  name: concourse-demo-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: cci-app
+      labels:
+        app: cci-app
+    spec:
+      containers:
+      - name: aci
+        image: whewawal/concourse-demo
+        #command: ["/bin/sh"]
+        ports:
+        - containerPort: 5000
+
