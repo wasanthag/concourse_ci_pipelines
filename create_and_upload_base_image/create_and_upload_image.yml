@@ -3,9 +3,9 @@ resources:
 - name: github-code
   type: git
   source:
-    uri: https://github.com/cisco-cis/nwss-cicd.git
-    #uri: git@github.com:cisco-cis/nwss-cicd.git
-    branch: develop
+    uri: https://github.com/wasanthag/concourse_ci_pipelines.git
+    #uri: git@github.com:wasanthag/concourse_ci_pipelines.git
+    branch: master
     paths: [create_and_upload_base_image/Dockerfile] 
     username: {{git_http_user}}
     password: {{git_http_token}}
