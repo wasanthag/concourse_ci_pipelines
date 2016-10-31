@@ -1,0 +1,72 @@
+---
+resource_types:
+- name: kubernetes
+  type: docker-image
+  source:
+    repository: wasanthag/concourse-kubernetes-resource
+
+resources:
+- name: github-code
+  type: git
+  source:
+    uri: https://github.com/wasanthag/concourse_ci_pipelines.git
+    branch: develop
+    #paths: [Dockerfile] 
+    username: {{git_http_user}}
+    password: {{git_http_token}}
+    #private_key: {{private_key}}
+- name: docker-registry
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: {{docker-hub-prod-image}}
+- name: k8s
+  type: kubernetes
+  source:
+    cluster_url: http://10.203.188.248:8080
+    namespace: default
+    resource_type: job
+    resource_name: cci-app
+    container_name: cci
+
+
+jobs:
+- name: unit-test
+  public: true
+  serial: true
+  plan:
+  - get: github-code
+    trigger: true
+  - put: docker-registry
+    params:
+      build: github-code
+  - task: run-unit-test
+    config:
+      platform: linux
+      image_resource: 
+        type: docker-image
+        source:
+          email: {{docker-hub-email}}
+          username: {{docker-hub-username}}
+          password: {{docker-hub-password}}
+          repository: {{docker-hub-prod-image}}
+      inputs:
+        - name: github-code
+      run:
+        path: github-code/run-unit-test.sh
+- name: deploy-app
+  public: true
+  serial: true
+  plan:
+    - get: github-code
+      trigger: true
+      passed: [unit-test]
+    - get: docker-registry
+      trigger: true
+    - put: k8s
+      params:
+        image_name: docker-registry/repository
+        image_tag: docker-registry/tag
+        resource_path: github-code/spec.yml
