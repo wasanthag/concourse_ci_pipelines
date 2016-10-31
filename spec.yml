@@ -12,7 +12,7 @@ spec:
         app: cci-app
     spec:
       containers:
-      - name: aci
+      - name: cci
         image: whewawal/concourse-demo
         #command: ["/bin/sh"]
         ports:
