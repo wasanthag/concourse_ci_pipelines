@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 def get_date():
    import time
-   print "getting date"
+   #print "getting date"
    return time.strftime("%d/%m/%Y")
 
 def get_time():
