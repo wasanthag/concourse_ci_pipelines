@@ -1,4 +1,4 @@
-apiVersion: extensions/v1
+apiVersion: extensions/v1beta1
 kind: ReplicationController
 metadata:
   name: cci-app
