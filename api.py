@@ -8,6 +8,7 @@ def get_date():
 
 def get_time():
    import time
+   print "getting time"
    return time.strftime("%I:%M:%S")
 
 
