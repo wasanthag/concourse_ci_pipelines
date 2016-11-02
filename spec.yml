@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: cci
-        image: whewawal/cci-prod
+        image: whewawal/cci-demo-prod
         #command: ["/bin/sh"]
         ports:
         - containerPort: 5000
