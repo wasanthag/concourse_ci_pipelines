@@ -1,4 +1,4 @@
-FROM whewawal/cci-demo
+FROM whewawal/concourse-ci-demo
 
 COPY api.py /opt/
 COPY templates /opt/templates
